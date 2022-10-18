@@ -1,14 +1,8 @@
-import { useState } from 'react';
+// import { useState, useEffect } from 'react';
+import BlogList from './BlogList';
+import useFetchData from './useFetch';
 
 const Home = () => {
-
-  const [blogs, setBlogs] = useState([
-    { title: 'My new website', body: 'lorem ipsum...', author: 'mario', id: 1 },
-    { title: 'Welcome party!', body: 'lorem ipsum...', author: 'yoshi', id: 2 },
-    { title: 'Web dev top tips', body: 'lorem ipsum...', author: 'mario', id: 3 }
-  ])
-
-
   // let name = 'Mario';
   // const [name, setName] =  useState('mario')
   // const [age, setAge] =  useState(32)
@@ -26,19 +20,94 @@ const Home = () => {
   //   console.log("Hello " + name, e);
   // };
 
+  /*
+  useEffect(()=> {
+    document.title = `You clicked ${example} times`
+  })
+
+  const [age, stateAge] = useState(22);
+  const [example, stateExample] = useState(22);
+  const [currentYear, stateCurrentYear] = useState(2022);
+  // const [name, setName] = useState('mario')
+  // const [lagn, setLang] = useState('my name is')
+*/
+
+  // const [blogs, setBlogs] = useState(null)
+  // const [isPending, setIsPending] = useState(true)
+  // const [error, setError] = useState(null)
+
+  // const handleDelete = id => {
+  //   const newBlogs = blogs.filter(eachBlog=> eachBlog.id !== id)
+  //   setBlogs(newBlogs)
+  // }
+
+  // useEffect(()=> {
+  // console.log('use effect')
+  // console.log('your name and language has changed')
+  // }, [name && lagn])
+  // this array means we want this useEffect fire when variable within array is changed
+
+  // useEffect(()=> {
+
+  //   setTimeout(()=> {
+  //   fetch("http://localhost:8000/blogs")
+  //   .then(response=> {
+  //     // console.log(response)
+  //     if (!response.ok) { throw new Error ('unf could not fetch data for that response')}
+  //     return response.json()
+  //   })
+  //   .then(data=> {
+  //     // console.log(data)
+  //     setBlogs(data)
+  //     setIsPending(false)
+  //     // initially this is true and we set it to false as soon as data is fetched
+  //     setError(null)
+  //   })
+  //   .catch (err=> {
+  //     // console.log(err.message)
+  //     setIsPending(false)
+  //     setError(err.message)
+  //   })
+
+  //   },100)
+  // }, [])
+
+  // useState(()=> {
+  //   console.log('use state')
+  // })
+
+  const { data, isPending, error } = useFetchData(
+    'http://localhost:8000/blogs'
+  );
+
   return (
     <div className="home">
+      {error && <div> {error}</div>}
+      {isPending && <div>Loading...</div>}
+      {/* when both of them true show Loading as soon as data is loaded then isPending will be false and it won't appear anymore */}
 
-      {blogs.map(blog=> (
-      <div className="blog-preview" key={blog.id} > 
-        <h2>{blog.title}</h2>
-        <p> Written by {blog.author} </p> 
-      </div> 
-      ))}
+      {data && <BlogList blogs={data} title="All Blogs!" />}
+      {/* <BlogList blogs={blogs.filter((eachBlog)=> eachBlog.author=== 'mario')} title='Mario"s blogs' handleDelete = {handleDelete}/> */}
 
-      {/* <h2>Homepage</h2> */}
+      {/* <p> {lagn} {name}</p>
+    <button onClick={()=> {
+      // setLang('Menim adim')
+       setName('Nicatdir')
+      }}>change above</button> */}
 
-      {/* <p> {name} is {age} years old</p> */}
+      {/* <p> Nijat has now {age} years</p>
+      <p>
+        In {currentYear} year it will be {example}{' '}
+      </p>
+
+      <button
+        onClick={() => {
+          stateCurrentYear(currentYear + 1);
+          stateExample(example + 1);
+        }}
+      >
+        CLICK HERE!
+      </button> */}
 
       {/* <button onClick={handleClick}>Click me</button> */}
 

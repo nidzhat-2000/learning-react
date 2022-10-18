@@ -13,6 +13,7 @@ const App = ()=> {
         <Navbar/>
       <div className="content">
         <Home/>
+        {/* <Online/> */}
         
          {/* <h1>{title}</h1> */}
         {/*<p> {likes} liked times</p> */}
